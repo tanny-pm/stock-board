@@ -14,10 +14,11 @@ def download_stock_price(ticker: str, start: date, end: date):
     return df_stock
 
 
-st.title("Stock Price Dashboard")
-
 df_stock = pd.DataFrame()
 
+st.title("Stock Price Dashboard")
+
+# Input form
 with st.sidebar.form("input_ticker"):
     ticker = st.text_input("Ticker", "AAPL")
     submitted = st.form_submit_button("Submit")
@@ -29,21 +30,13 @@ with st.sidebar.form("input_ticker"):
         except ValueError as e:
             st.error(e, icon="🚨")
 
-
-tab1, tab2 = st.tabs(["🗒️ Table", "📈 Chart"])
+# Output
+tab1, tab2 = st.tabs(["📈 Chart", "🗒️ Table"])
 
 with tab1:
-    st.header("Dataframe")
-    if df_stock.empty:
-        st.info("Input the ticker and submit.", icon="ℹ️")
-    else:
-        st.dataframe(df_stock.style.highlight_max(axis=0), use_container_width=True)
-
-with tab2:
-    # https://myfrankblog.com/stock_price_chart_with_python_plotly/
     st.header("Candlestick chart")
     if df_stock.empty:
-        st.info("Input the ticker and submit.", icon="ℹ️")
+        st.info("No data. Submit the ticker.", icon="ℹ️")
     else:
         fig = go.Figure(
             data=[
@@ -64,4 +57,11 @@ with tab2:
         )
         fig.update_xaxes(tickformat="%Y/%m/%d")
         fig.update_yaxes(separatethousands=True)
-        st.plotly_chart(fig)
+        st.plotly_chart(fig, use_container_width=True)
+
+with tab2:
+    st.header("Dataframe")
+    if df_stock.empty:
+        st.info("No data. Submit the ticker.", icon="ℹ️")
+    else:
+        st.dataframe(df_stock.style.highlight_max(axis=0), use_container_width=True)
