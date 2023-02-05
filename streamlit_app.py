@@ -14,7 +14,7 @@ def download_stock_price(ticker: str, start: date, end: date):
 
 st.title("Stock Price Dashboard")
 
-with st.form("input_ticker"):
+with st.sidebar.form("input_ticker"):
     ticker = st.text_input("Ticker", "AAPL")
     submitted = st.form_submit_button("Submit")
     if submitted:
