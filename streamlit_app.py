@@ -14,11 +14,13 @@ def download_stock_price(ticker: str, start: date, end: date):
 
 st.title("Stock Price Dashboard")
 
-
-ticker = "AAPL"
-end = datetime.now().date()
-start = datetime(end.year - 1, end.month, end.day).date()
-df_stock = download_stock_price(ticker, start, end)
+with st.form("input_ticker"):
+    ticker = st.text_input("Ticker", "AAPL")
+    submitted = st.form_submit_button("Submit")
+    if submitted:
+        end = datetime.now().date()
+        start = datetime(end.year - 1, end.month, end.day).date()
+        df_stock = download_stock_price(ticker, start, end)
 
 st.header("Dataframe")
 st.dataframe(df_stock.style.highlight_max(axis=0), use_container_width=True)
