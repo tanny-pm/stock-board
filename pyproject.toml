@@ -5,6 +5,7 @@ description = "The stock price dashboard using Streamlit."
 authors = ["Tanny"]
 license = "MIT"
 readme = "README.md"
+packages = [{include = "stock_board"}]
 
 [tool.poetry.dependencies]
 python = ">=3.9,<3.9.7 || >3.9.7,<4.0"
